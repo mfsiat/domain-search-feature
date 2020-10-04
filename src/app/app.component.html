@@ -1,7 +1,27 @@
-<h1>Angular http client basics</h1>
-
-<button (click)="getPosts()">Get Posts</button>
-
-<div *ngFor="let post of posts | async">
-  {{ post | json }}
+<h2>Enter Domain Name</h2>
+<div class="input-group">
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Domain name"
+    aria-label="Domain name"
+    aria-describedby="basic-addon2"
+  />
+  <select class="custom-select" id="inputGroupSelect04">
+    <option selected>Choose...</option>
+    <option value="1">.com</option>
+    <option value="2">.net</option>
+    <option value="3">.info</option>
+  </select>
+  <div class="input-group-append">
+    <button class="btn btn-outline-secondary" type="button">Search</button>
+  </div>
 </div>
+<ul *ngFor="let item of xmlItems">
+  <li>{{ item | json }}</li>
+</ul>
+
+<!-- 
+<ul>
+  <li>{{ PremiumRegistrationPrice }}</li>
+</ul> -->
