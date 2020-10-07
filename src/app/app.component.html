@@ -1,24 +1,33 @@
 <div class="card-body">
   <h2 style="text-align: center">Search for Domain</h2>
+  <!-- Domain name -->
   <div>
-    <form (submit)="onSubmit($event)">
+    <form (ngSubmit)="onSubmit()">
       <div class="form-row">
         <div class="form-group col-md-6">
           <input
             type="text"
             class="form-control"
             placeholder="Enter Domain Name"
+            required
+            [(ngModel)]="model.domainName"
             name="domainName"
-            (keydown)="fireEvent($event)"
           />
         </div>
+        <!-- Domain Type selection -->
         <div class="form-group col-md-2">
-          <select id="inputState" class="form-control">
-            <option selected>Choose...</option>
-            <option>.com</option>
-            <option>.net</option>
-            <option>.org</option>
-            <option>.info</option>
+          <select
+            id="domainType"
+            class="form-control"
+            required
+            [(ngModel)]="model.domainType"
+            name="domainType"
+            #dt
+            (change)="callType(dt.value)"
+          >
+            <option *ngFor="let domType of domainType" [value]="domType">
+              {{ domType }}
+            </option>
           </select>
         </div>
         <div class="form-group col-md-2">
@@ -27,9 +36,13 @@
       </div>
     </form>
   </div>
+  <!-- shows the response -->
   <div class="card card-body">
+    <h3>{{ diagnostic }}</h3>
+    <!-- <br /> -->
     <ul *ngFor="let item of xmlItems">
       <li>{{ item | json }}</li>
     </ul>
   </div>
+  <!-- end response -->
 </div>

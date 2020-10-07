@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import xml2js from 'xml2js';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+import { Domain } from './domain';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -9,38 +11,61 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class AppComponent {
   httpData;
   public xmlItems: any;
+
   constructor(private http: HttpClient) {}
 
+  domainType = ['.com', '.net', '.org'];
+
+  model = new Domain('', '', '');
+
+  submitted = false;
+
+  callType(value) {
+    console.log(value);
+    // this.order.type=value;
+    // this.domainType = value;
+    this.model.domainType = value;
+    // this.domain_name = this.model.domainName + this.model.domainType;
+  }
+  onSubmit() {
+    this.submitted = true;
+    this.checkDomain(this.model.domainName + this.model.domainType);
+  }
+
+  // credentials
   ApiUser = 'softopark';
-  domain_name = 'wowweber.com';
+  // domain_name = 'dsadasdasdad';
   ApiKey = '651498aa5e3d40a79826fab2c1cd4e49';
   Command = 'namecheap.domains.check';
   ClientIp = '103.218.26.135';
-  ngOnInit() {
-    // this.http
-    //   .get(
-    //     `https://api.namecheap.com/xml.response?ApiUser=${this.ApiUser}&ApiKey=${this.ApiKey}&UserName=softopark&ClientIp=${this.ClientIp}&Command=${this.Command}&DomainList=${this.domain_name}`,
-    //     {
-    //       headers: new HttpHeaders()
-    //         .set('Content-Type', 'text/xml')
-    //         .append('Access-Control-Allow-Methods', 'GET')
-    //         .append(
-    //           'Access-Control-Allow-Origin',
-    //           'https://api.namecheap.com/xml.response'
-    //         )
-    //         .append(
-    //           'Access-Control-Allow-Headers',
-    //           'Access-Control-Allow-Headers, Access-Control-Allow-Origin, Access-Control-Request-Method'
-    //         ),
-    //       responseType: 'text',
-    //     }
-    //   )
-    //   .subscribe((data) => {
-    //     this.parseXML(data).then((data) => {
-    //       this.xmlItems = data;
-    //     });
-    //   });
+
+  // function to check domain
+  checkDomain(domainFullName) {
+    this.http
+      .get(
+        `https://api.namecheap.com/xml.response?ApiUser=${this.ApiUser}&ApiKey=${this.ApiKey}&UserName=softopark&ClientIp=${this.ClientIp}&Command=${this.Command}&DomainList=${domainFullName}`,
+        {
+          headers: new HttpHeaders()
+            .set('Content-Type', 'text/xml')
+            .append('Access-Control-Allow-Methods', 'GET')
+            .append(
+              'Access-Control-Allow-Origin',
+              'https://api.namecheap.com/xml.response'
+            )
+            .append(
+              'Access-Control-Allow-Headers',
+              'Access-Control-Allow-Headers, Access-Control-Allow-Origin, Access-Control-Request-Method'
+            ),
+          responseType: 'text',
+        }
+      )
+      .subscribe((data) => {
+        this.parseXML(data).then((data) => {
+          this.xmlItems = data;
+        });
+      });
   }
+  ngOnInit() {}
 
   parseXML(data) {
     return new Promise((resolve) => {
@@ -74,14 +99,19 @@ export class AppComponent {
     });
   }
 
-  fireEvent(e) {
-    console.log('Button Clicked');
-    console.log(e.type);
-    console.log(e.target.value);
-  }
+  // fireEvent(e) {
+  //   console.log('Button Clicked');
+  //   console.log(e.type);
+  //   console.log(e.target.value);
+  // }
 
-  onSubmit(e) {
-    console.log(123);
-    e.preventDefault();
+  // onSubmit(e) {
+  //   console.log(e.target.value);
+  //   e.preventDefault();
+  // }
+
+  get diagnostic() {
+    // return `Your searching for: ` + JSON.stringify(this.model);
+    return `Your searching for:" ${this.model.domainName}${this.model.domainType} "`;
   }
 }
