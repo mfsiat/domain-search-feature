@@ -4,18 +4,27 @@
   <div>
     <form (ngSubmit)="onSubmit()">
       <div class="form-row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-7">
           <input
             type="text"
             class="form-control"
             placeholder="Enter Domain Name"
             required
             [(ngModel)]="model.domainName"
+            [ngClass]="{
+              'is-invalid': modelDomainName.errors && modelDomainName.touched
+            }"
             name="domainName"
+            #modelDomainName="ngModel"
+            required
+            minlength="2"
           />
+          <div class="invalid-feedback">
+            Please enter a valid domain name excluding '@', ','
+          </div>
         </div>
         <!-- Domain Type selection -->
-        <div class="form-group col-md-2">
+        <div class="form-group col">
           <select
             id="domainType"
             class="form-control"
@@ -30,8 +39,14 @@
             </option>
           </select>
         </div>
-        <div class="form-group col-md-2">
-          <button type="submit" class="btn btn-primary">Search</button>
+        <div class="form-group col">
+          <button
+            [disabled]="!modelDomainName.valid"
+            type="submit"
+            class="btn btn-primary"
+          >
+            Search
+          </button>
         </div>
       </div>
     </form>
