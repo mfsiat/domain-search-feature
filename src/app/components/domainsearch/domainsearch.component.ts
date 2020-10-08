@@ -8,7 +8,7 @@ import { Domain } from '../../models/Domain';
   styleUrls: ['./domainsearch.component.css'],
 })
 export class DomainsearchComponent implements OnInit {
-  constructor(private domainService: DomainService) {}
+  constructor(public domainService: DomainService) {}
 
   domainType = ['.com', '.net', '.org'];
 
