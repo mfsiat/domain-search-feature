@@ -12,15 +12,15 @@ export class DomainsearchComponent implements OnInit {
 
   domainType = ['.com', '.net', '.org'];
 
+  selectedDomainType: any = '.com';
+
   model = new Domain('', '', '');
 
   submitted = false;
 
   public xmlItems: any;
 
-  ngOnInit(): void {
-    // this.domainService.parseXML(this.xmlItems).subscribe();
-  }
+  ngOnInit(): void {}
 
   callType(value) {
     console.log(value);
@@ -34,6 +34,14 @@ export class DomainsearchComponent implements OnInit {
       this.model.domainName + this.model.domainType
     );
   }
+
+  domainSearchRT() {
+    // this.submitted = true;
+    if(this.model.domainName != null && this.model.domainType != ''){
+      this.domainService.checkDomain(this.model.domainName + this.model.domainType);  
+    }
+  }
+
   get diagnostic() {
     return `Your searching for:" www.${this.model.domainName}${this.model.domainType} "`;
   }

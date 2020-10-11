@@ -1,6 +1,8 @@
 <div class="card-body">
   <h2 style="text-align: center">Search for Domain</h2>
+
   <!-- Domain name -->
+
   <div>
     <form (ngSubmit)="onSubmit()">
       <div class="form-row">
@@ -9,6 +11,7 @@
             type="text"
             class="form-control"
             placeholder="Enter Domain Name"
+            (keyup)="domainSearchRT()"
             required
             [(ngModel)]="model.domainName"
             [ngClass]="{
@@ -23,23 +26,23 @@
             Please enter a valid domain name excluding '@', ','
           </div>
         </div>
+
         <!-- Domain Type selection -->
         <div class="form-group col">
           <select
             id="domainType"
             class="form-control"
+            (change)="domainSearchRT()"
             required
             [(ngModel)]="model.domainType"
             name="domainType"
-            #dt
-            (change)="callType(dt.value)"
           >
             <option *ngFor="let domType of domainType" [value]="domType">
               {{ domType }}
             </option>
           </select>
         </div>
-        <div class="form-group col">
+        <!-- <div class="form-group col">
           <button
             [disabled]="!modelDomainName.valid"
             type="submit"
@@ -47,15 +50,13 @@
           >
             Search
           </button>
-        </div>
+        </div> -->
       </div>
     </form>
   </div>
   <!-- shows the response -->
   <div class="card card-body">
     <h3>{{ diagnostic }}</h3>
-    <!-- <br /> -->
-    <!-- {{ domainService.xmlItems }} -->
     <ul *ngFor="let item of domainService.xmlItems">
       <li>{{ item | json }}</li>
     </ul>
@@ -64,3 +65,5 @@
 </div>
 
 <!-- pattern="^((?!-)[A-Za-z0-9-]{1,63}(?<!-)\\.)+[A-Za-z]{2,6}$" -->
+<!-- #dt
+(change)="callType(dt.value)" -->
