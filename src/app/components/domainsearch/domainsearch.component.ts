@@ -20,7 +20,9 @@ export class DomainsearchComponent implements OnInit {
 
   public xmlItems: any;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.domainSearchRT();
+  }
 
   callType(value) {
     console.log(value);
